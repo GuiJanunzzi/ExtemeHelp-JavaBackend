@@ -1,14 +1,19 @@
 package br.com.fiap.extremehelp.config;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import br.com.fiap.extremehelp.model.PedidoAjuda;
+import br.com.fiap.extremehelp.model.StatusPedido;
 import br.com.fiap.extremehelp.model.TipoUsuario;
 import br.com.fiap.extremehelp.model.Usuario;
+import br.com.fiap.extremehelp.repository.PedidoAjudaRepository;
 import br.com.fiap.extremehelp.repository.UsuarioRepository;
 import jakarta.annotation.PostConstruct;
 
@@ -17,6 +22,9 @@ public class DatabaseSeeder {
     
     @Autowired
     UsuarioRepository usuarioRepository;
+
+    @Autowired
+    PedidoAjudaRepository pedidoAjudaRepository;
 
     @PostConstruct
     public void init(){
@@ -53,5 +61,42 @@ public class DatabaseSeeder {
         );
 
         usuarioRepository.saveAll(usuarios);
+
+        var pedidosAjuda = List.of(
+            PedidoAjuda.builder()
+            .tipoAjuda("Alimentação")
+            .descricão("Solicita cesta básica para família com 2 crianças")
+            .latitude(-23.561234)
+            .longitude(-46.655678)
+            .endereco("Rua das Laranjeiras, 150, São Paulo, SP")
+            .dataPedido(LocalDateTime.parse("2025-05-28 16:51", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+            .statusPedido(StatusPedido.PENDENTE)
+            .usuario(usuarios.get(0)) // Supondo método existente
+            .build(),
+
+        PedidoAjuda.builder()
+            .tipoAjuda("Remédios")
+            .descricão("Ajuda para obter medicamentos controlados para idosa de 74 anos")
+            .latitude(-23.567891)
+            .longitude(-46.678901)
+            .endereco("Avenida Paulista, 1000, São Paulo, SP")
+            .dataPedido(LocalDateTime.parse("2025-05-29 10:21", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+            .statusPedido(StatusPedido.EM_ATENDIMENTO)
+            .usuario(usuarios.get(1))
+            .build(),
+
+        PedidoAjuda.builder()
+            .tipoAjuda("Acompanhamento Médico")
+            .descricão("Precisa de acompanhamento médico para paciente com mobilidade reduzida")
+            .latitude(-23.587328)
+            .longitude(-46.600000)
+            .endereco("Rua Bela Vista, 45, São Paulo, SP")
+            .dataPedido(LocalDateTime.parse("2025-05-30 17:43", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+            .statusPedido(StatusPedido.CONCLUIDO)
+            .usuario(usuarios.get(2))
+            .build()
+        );
+
+        pedidoAjudaRepository.saveAll(pedidosAjuda);
     }
 }
