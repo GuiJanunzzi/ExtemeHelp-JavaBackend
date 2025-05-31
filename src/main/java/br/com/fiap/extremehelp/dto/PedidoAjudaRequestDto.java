@@ -1,6 +1,5 @@
 package br.com.fiap.extremehelp.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -63,8 +62,8 @@ public class PedidoAjudaRequestDto {
     @Schema(description = "Endereço da solicitação de ajuda", example = "Rua das Flores, 382, São Paulo, SP")
     private String endereco;
 
+    @NotNull(message = "A data é obrigatória")
     @PastOrPresent(message = "A data de registro não pode estar no futuro.")
-    @PastOrPresent(message = "A data não pode ser no futuro")
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     @Schema(description = "Data de registro do pedido de ajuda", example = "30/05/2025 09:43", required = true)
     private LocalDateTime dataPedido;
