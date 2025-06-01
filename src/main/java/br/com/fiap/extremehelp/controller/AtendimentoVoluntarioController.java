@@ -40,7 +40,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/atendimento-voluntario")
 @CrossOrigin
-@Tag(name = "Problema", description = "API para gerenciamento de atendimento voluntario de solicitações de ajuda no sistema da ExtremeHelp")
+@Tag(name = "Atendimento Voluntario", description = "API para gerenciamento de atendimento voluntario de solicitações de ajuda no sistema da ExtremeHelp")
 public class AtendimentoVoluntarioController {
     
     private Logger log = LoggerFactory.getLogger(getClass());
