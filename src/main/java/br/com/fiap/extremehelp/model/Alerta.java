@@ -38,7 +38,7 @@ public class Alerta {
     private String titulo;
 
     @NotBlank(message = "A mensagem é obrigatória")
-    @Size(max = 1000, message = "A mensagem deve ter no máximo 1000 caracteres")
+    @Size(max = 2000, message = "A mensagem deve ter no máximo 2000 caracteres")
     @Schema(description = "Mensagem explicando o conteúdo do alerta", example = "As fortes chuvas causaram alagamentos em diversos bairros da zona leste.", required = true)
     private String mensagem;
 
@@ -53,7 +53,7 @@ public class Alerta {
     @Schema(description = "Nível de seriedade do alerta", example = "GRAVE", required = true, allowableValues = {"INFORMATIVO", "MODERADO", "GRAVE", "CRITICO"})
     private SeriedadeAlerta seriedadeAlerta;
 
-    @Size(max = 200, message = "A fonte deve ter no máximo 200 caracteres")
+    @Size(max = 100, message = "A fonte deve ter no máximo 100 caracteres")
     @Schema(description = "Fonte da informação do alerta", example = "Defesa Civil de São Paulo")
     private String fonte;
 
