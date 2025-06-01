@@ -1,6 +1,5 @@
 package br.com.fiap.extremehelp.config;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,10 +8,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import br.com.fiap.extremehelp.model.AtendimentoVoluntario;
 import br.com.fiap.extremehelp.model.PedidoAjuda;
 import br.com.fiap.extremehelp.model.StatusPedido;
 import br.com.fiap.extremehelp.model.TipoUsuario;
 import br.com.fiap.extremehelp.model.Usuario;
+import br.com.fiap.extremehelp.repository.AtendimentoVoluntarioRepository;
 import br.com.fiap.extremehelp.repository.PedidoAjudaRepository;
 import br.com.fiap.extremehelp.repository.UsuarioRepository;
 import jakarta.annotation.PostConstruct;
@@ -25,6 +26,9 @@ public class DatabaseSeeder {
 
     @Autowired
     PedidoAjudaRepository pedidoAjudaRepository;
+
+    @Autowired
+    AtendimentoVoluntarioRepository atendimentoVoluntarioRepository;
 
     @PostConstruct
     public void init(){
@@ -98,5 +102,33 @@ public class DatabaseSeeder {
         );
 
         pedidoAjudaRepository.saveAll(pedidosAjuda);
+
+        var atendimentos = List.of(
+            AtendimentoVoluntario.builder()
+            .dataAceite(LocalDateTime.parse("2025-05-28T14:30"))
+            .dataConclusao(null) // ainda não concluído
+            .observacoes(null)   // sem observações ainda
+            .pedidoAjuda(pedidosAjuda.get(0))
+            .usuario(usuarios.get(1))
+            .build(),
+
+        AtendimentoVoluntario.builder()
+            .dataAceite(LocalDateTime.parse("2025-05-29T09:00"))
+            .dataConclusao(LocalDateTime.parse("2025-05-30T11:45"))
+            .observacoes("Entrega realizada com sucesso. Beneficiário agradeceu.")
+            .pedidoAjuda(pedidosAjuda.get(1))
+            .usuario(usuarios.get(1))
+            .build(),
+
+        AtendimentoVoluntario.builder()
+            .dataAceite(LocalDateTime.parse("2025-05-31T08:15"))
+            .dataConclusao(null) // ainda em andamento
+            .observacoes("Voluntário saiu para entrega, previsão de chegada às 10h.")
+            .pedidoAjuda(pedidosAjuda.get(2))
+            .usuario(usuarios.get(1))
+            .build()
+        );
+
+        atendimentoVoluntarioRepository.saveAll(atendimentos);
     }
 }
