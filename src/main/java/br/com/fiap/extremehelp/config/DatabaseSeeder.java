@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import br.com.fiap.extremehelp.model.Alerta;
 import br.com.fiap.extremehelp.model.AtendimentoVoluntario;
+import br.com.fiap.extremehelp.model.DicaPreparacao;
 import br.com.fiap.extremehelp.model.PedidoAjuda;
 import br.com.fiap.extremehelp.model.SeriedadeAlerta;
 import br.com.fiap.extremehelp.model.StatusPedido;
@@ -17,6 +18,7 @@ import br.com.fiap.extremehelp.model.TipoUsuario;
 import br.com.fiap.extremehelp.model.Usuario;
 import br.com.fiap.extremehelp.repository.AlertaRepositry;
 import br.com.fiap.extremehelp.repository.AtendimentoVoluntarioRepository;
+import br.com.fiap.extremehelp.repository.DicaPreparacaoRepository;
 import br.com.fiap.extremehelp.repository.PedidoAjudaRepository;
 import br.com.fiap.extremehelp.repository.UsuarioRepository;
 import jakarta.annotation.PostConstruct;
@@ -35,6 +37,9 @@ public class DatabaseSeeder {
 
     @Autowired
     AlertaRepositry alertaRepositry;
+
+    @Autowired
+    DicaPreparacaoRepository dicaPreparacaoRepository;
 
     @PostConstruct
     public void init(){
@@ -167,5 +172,30 @@ public class DatabaseSeeder {
         );
 
         alertaRepositry.saveAll(alertas);
+
+        var dicas = List.of(
+            DicaPreparacao.builder()
+                .titulo("Kit de emergência")
+                .conteudo("Inclua água potável, alimentos não perecíveis, lanterna, pilhas, documentos e medicamentos de uso contínuo.")
+                .categoria("Prevenção")
+                .dataAtualizacao(LocalDateTime.parse("2025-05-15T09:30"))
+                .build(),
+
+            DicaPreparacao.builder()
+                .titulo("Chuvas forttes")
+                .conteudo("Não caminhe em áreas alagadas, mantenha-se em locais altos e evite contato com a rede elétrica.")
+                .categoria("Segurança")
+                .dataAtualizacao(LocalDateTime.parse("2025-05-20T14:45"))
+                .build(),
+
+            DicaPreparacao.builder()
+                .titulo("Contatos de Emergência")
+                .conteudo("Mantenha uma lista atualizada com telefones da Defesa Civil, Corpo de Bombeiros, e familiares.")
+                .categoria("Organização")
+                .dataAtualizacao(LocalDateTime.parse("2025-05-25T08:10"))
+                .build()
+        );
+
+        dicaPreparacaoRepository.saveAll(dicas);
     }
 }
