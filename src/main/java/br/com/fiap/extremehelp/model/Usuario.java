@@ -1,6 +1,12 @@
 package br.com.fiap.extremehelp.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -28,7 +34,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Entidade que representa um usuário no sistema da ExtemeHelp")
-public class Usuario {
+public class Usuario implements UserDetails{
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "ID único do usuário", example = "1", readOnly = true)
@@ -67,4 +73,19 @@ public class Usuario {
     @NotNull(message = "O status é obrigatório.")
     @Schema(description = "Status do usuário (ativo/inativo)", example = "true")
     private Boolean status;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + tipoUsuario.toString()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public String getPassword() {
+        return senha;
+    }
 }

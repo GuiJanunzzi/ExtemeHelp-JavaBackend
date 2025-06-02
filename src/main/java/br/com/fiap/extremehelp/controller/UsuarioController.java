@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     //----- Documentação Swagger -----
     @Operation(
@@ -75,6 +79,7 @@ public class UsuarioController {
     public ResponseEntity<Usuario> create(@RequestBody @Valid Usuario usuario){
         log.info("Cadastrando Usuario");
 
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         repository.save(usuario);
         return ResponseEntity.status(201).body(usuario);
     }
