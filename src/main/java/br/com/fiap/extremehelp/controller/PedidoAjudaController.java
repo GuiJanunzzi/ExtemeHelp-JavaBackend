@@ -86,7 +86,7 @@ public class PedidoAjudaController {
 
         PedidoAjuda pedidoAjuda = PedidoAjuda.builder()
             .tipoAjuda(dto.getTipoAjuda())
-            .descricão(dto.getDescricão())
+            .descricao(dto.getDescricão())
             .latitude(dto.getLatitude())
             .longitude(dto.getLongitude())
             .endereco(dto.getEndereco())
@@ -136,7 +136,7 @@ public class PedidoAjudaController {
 
         PedidoAjuda pedidoAjuda = PedidoAjuda.builder()
             .tipoAjuda(dto.getTipoAjuda())
-            .descricão(dto.getDescricão())
+            .descricao(dto.getDescricão())
             .latitude(dto.getLatitude())
             .longitude(dto.getLongitude())
             .endereco(dto.getEndereco())

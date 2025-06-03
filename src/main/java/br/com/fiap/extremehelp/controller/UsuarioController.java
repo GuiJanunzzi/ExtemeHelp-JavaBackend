@@ -118,6 +118,7 @@ public class UsuarioController {
 
         getUsuario(id);
         usuario.setId(id);
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         repository.save(usuario);
 
         return usuario;
